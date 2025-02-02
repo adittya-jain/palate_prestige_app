@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "583188405875",
+    "project_id": "palate-prestige",
+    "storage_bucket": "palate-prestige.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583188405875:android:dec33241c4346a3c7fd406",
+        "android_client_info": {
+          "package_name": "com.example.palate_prestige"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNSA62ppPW3YjUsQoJNM0DtKS0s5Z_kAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
