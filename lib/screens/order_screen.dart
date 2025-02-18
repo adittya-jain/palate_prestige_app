@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palate_prestige/models/orders_model.dart';
+import 'package:palate_prestige/services/websocket_service.dart';
 
 import '../widgets/rating_star.dart';
 
@@ -33,6 +34,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     Future.delayed(const Duration(seconds: 20), () {
       setState(() {
         _isBeingPrepared = true;
+      });
+    });
+
+    SocketClient.instance.orderReadyStream.listen((data) {
+      setState(() {
+        _isPrepared = true; // Example structure
       });
     });
   }

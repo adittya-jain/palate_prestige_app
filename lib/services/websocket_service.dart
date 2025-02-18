@@ -2,20 +2,36 @@
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'dart:async';
+
+
 class SocketClient {
   IO.Socket? socket;
   static SocketClient? _instance;
 
+  // Stream controller for orderReady event
+  final StreamController<Map<String, dynamic>> _orderReadyController =
+      StreamController.broadcast();
+
+  Stream<Map<String, dynamic>> get orderReadyStream => _orderReadyController.stream;
+
   SocketClient._internal() {
-    // 'https://afosfr-server.onrender.com/'
     socket = IO.io('https://afosfr-server.onrender.com/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
     });
+
     socket!.onConnect((_) => print('Connected to server'));
     socket!.onDisconnect((_) => print('Disconnected from server'));
     socket!.onConnectError((error) => print('Connection error: $error'));
     socket!.onError((error) => print('Socket error: $error'));
+
+    // Listen to "orderReady" event
+    socket!.on('orderReady', (data) {
+      print('Order is ready: $data');
+      _orderReadyController.add(data); // Add event to stream
+    });
+
     socket!.connect();
   }
 
@@ -41,18 +57,7 @@ class SocketMethods {
       },
     );
     print(orderJson);
-    //When an event recieved from server, data is added to the stream
-    _socketClient.on(
-      'orderReady',
-      (data) => {
-        print(data),
-      },
-    );
   }
 
-  void fetchData() {
-    _socketClient.on('fetchOrder', (data) {
-      print(data);
-    });
-  }
+  
 }
